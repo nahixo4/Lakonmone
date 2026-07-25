@@ -207,8 +207,10 @@
         </div>
     </div>
 
+    <!-- Navigation Tabs -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('tasks', this)">Tasks</button>
+        <button class="tab-btn" onclick="switchTab('videos', this)">Videos 🎬</button>
         <button class="tab-btn" onclick="switchTab('referral', this)">Referral</button>
         <button class="tab-btn" onclick="switchTab('withdraw', this)">Withdraw</button>
         <button class="tab-btn" onclick="switchTab('proof', this)">Proof ✅</button>
@@ -269,16 +271,18 @@
                 </div>
                 <button class="btn-action" id="btn_yt3" onclick="handleTask('yt3', 150, 'https://www.youtube.com/@lakon-Emoney')">ሥራው</button>
             </div>
+        </div>
 
+        <!-- Videos Page (ለብቻው የተለየ Tab) -->
+        <div id="videos" class="page">
             <div class="section-title">🎬 30 Sec Video Tasks (+50 ETB)</div>
 
-            <!-- 10 የቪዲዮ ታስኮች -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ቪዲዮ 1 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn1" onclick="startVideoTask(this, 1)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_1" onclick="startVideoTask('1')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -286,7 +290,7 @@
                     <h4>ቪዲዮ 2 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn2" onclick="startVideoTask(this, 2)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_2" onclick="startVideoTask('2')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -294,7 +298,7 @@
                     <h4>ቪዲዮ 3 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn3" onclick="startVideoTask(this, 3)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_3" onclick="startVideoTask('3')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -302,7 +306,7 @@
                     <h4>ቪዲዮ 4 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn4" onclick="startVideoTask(this, 4)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_4" onclick="startVideoTask('4')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -310,7 +314,7 @@
                     <h4>ቪዲዮ 5 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn5" onclick="startVideoTask(this, 5)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_5" onclick="startVideoTask('5')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -318,7 +322,7 @@
                     <h4>ቪዲዮ 6 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn6" onclick="startVideoTask(this, 6)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_6" onclick="startVideoTask('6')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -326,7 +330,7 @@
                     <h4>ቪዲዮ 7 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn7" onclick="startVideoTask(this, 7)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_7" onclick="startVideoTask('7')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -334,7 +338,7 @@
                     <h4>ቪዲዮ 8 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn8" onclick="startVideoTask(this, 8)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_8" onclick="startVideoTask('8')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -342,7 +346,7 @@
                     <h4>ቪዲዮ 9 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn9" onclick="startVideoTask(this, 9)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_9" onclick="startVideoTask('9')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -350,9 +354,8 @@
                     <h4>ቪዲዮ 10 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" id="vbtn10" onclick="startVideoTask(this, 10)">ሥራው</button>
+                <button class="btn-action v-btn" id="vbtn_10" onclick="startVideoTask('10')">ሥራው</button>
             </div>
-
         </div>
 
         <!-- Referral Page -->
@@ -431,6 +434,7 @@
         }
 
         let taskState = JSON.parse(localStorage.getItem('taskState')) || {};
+        let isVideoRunning = false; // አንዱ ቪዲዮ እየሰራ ከሆነ ሌላው እንዳይጀምር መቆጣጠሪያ
 
         updateUI();
         initButtons();
@@ -449,6 +453,7 @@
         }
 
         function initButtons() {
+            // Social media tasks setup
             for (let id in taskState) {
                 let btn = document.getElementById('btn_' + id);
                 if (btn) {
@@ -461,13 +466,22 @@
                     }
                 }
             }
+
+            // Video tasks setup
+            for (let i = 1; i <= 10; i++) {
+                let vDone = localStorage.getItem('vtask_' + i);
+                let btn = document.getElementById('vbtn_' + i);
+                if (vDone && btn) {
+                    btn.innerText = "ተጠናቋል ✅";
+                    btn.disabled = true;
+                }
+            }
         }
 
         function handleTask(id, reward, url) {
             let btn = document.getElementById('btn_' + id);
             
             if (!taskState[id]) {
-                // Step 1: Open Link First
                 window.open(url, '_blank');
                 taskState[id] = 'opened';
                 localStorage.setItem('taskState', JSON.stringify(taskState));
@@ -475,7 +489,6 @@
                 btn.classList.add('btn-verify');
                 alert("እባክዎን ቻናሉን ጆይን/ሰብስክራይብ አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
             } else if (taskState[id] === 'opened') {
-                // Step 2: Verify & Claim Reward
                 coins += reward;
                 taskState[id] = 'done';
                 localStorage.setItem('coins', coins);
@@ -489,30 +502,40 @@
             }
         }
 
-        function startVideoTask(btn, taskId) {
-            let completed = localStorage.getItem('vtask_' + taskId);
-            if (completed) {
+        // Sequential 30-Second Video Logic
+        function startVideoTask(taskId) {
+            if (isVideoRunning) {
+                alert("⚠️ እባክዎ አሁን እየሄደ ያለው 30 ሰከንድ እስኪያልቅ ይጠብቁ!");
+                return;
+            }
+
+            let btn = document.getElementById('vbtn_' + taskId);
+
+            if (localStorage.getItem('vtask_' + taskId)) {
                 alert("ይህንን ታስክ አስቀድመው ሠርተዋል!");
                 return;
             }
 
+            isVideoRunning = true; // Timer መጀመሩን መዝግብ
             let timeLeft = 30;
             btn.disabled = true;
 
             let timer = setInterval(() => {
-                btn.innerText = `እባክዎ ${timeLeft}s ይጠብቁ...`;
+                btn.innerText = `${timeLeft}s ይጠብቁ...`;
                 timeLeft--;
 
                 if (timeLeft < 0) {
                     clearInterval(timer);
-                    btn.innerText = "ተጠናቋል ✅";
+                    isVideoRunning = false; // መዘጋቱን መዝግብ
                     
+                    btn.innerText = "ተጠናቋል ✅";
                     coins += 50;
                     localStorage.setItem('coins', coins);
                     localStorage.setItem('vtask_' + taskId, 'done');
                     updateUI();
                     
-                    alert("እንኳን ደስ አለዎት! 50.00 ETB አግኝተዋል።");
+                    // Verification Alert Message
+                    alert("🎉 Verification Successful!\n\nቪዲዮውን ለ 30 ሰከንድ ስለተመለከቱ 50.00 ETB በስኬት ተጨምሮልዎታል!");
                 }
             }, 1000);
         }
@@ -538,7 +561,7 @@
             alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
         }
 
-        // Live Banner Logic
+        // Live Banner Animation
         const fakeData = [
             { user: "@abebe_88", amount: "5,000" },
             { user: "@kalid_m", amount: "5,200" },
