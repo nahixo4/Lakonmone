@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding-bottom: 75px; /* በትልቁ ባነር ምክንያት ከስር ቦታ እንዲኖር */
+            padding-bottom: 85px; /* ከስር ቦታ እንዲኖር */
         }
         .header {
             background-color: #1e1e1e;
@@ -117,57 +117,74 @@
             font-size: 14px;
         }
 
-        /* ትልቅ የቀጥታ ክፍያ ማሳወቂያ (Bigger & Highlighted Live Banner) */
-        .live-banner {
+        /* ወደላይ የሚሸራተት ማሳወቂያ (Vertical Slide Banner) */
+        .live-banner-container {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(90deg, #16222f, #1b2e3c);
+            height: 60px;
+            background: linear-gradient(180deg, #182533, #0f172a);
             border-top: 3px solid #27ae60;
-            color: #ffffff;
-            padding: 14px 18px;
-            font-size: 15px;
+            overflow: hidden;
+            z-index: 1000;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.8);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
-            z-index: 1000;
+            padding: 0 15px;
         }
-        .live-dot {
-            height: 12px;
-            width: 12px;
+
+        .live-badge-wrapper {
+            display: flex;
+            align-items: center;
             background-color: #27ae60;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .live-dot {
+            height: 8px;
+            width: 8px;
+            background-color: #fff;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 8px;
-            box-shadow: 0 0 8px #27ae60;
-            animation: pulse 1.2s infinite;
+            margin-right: 6px;
+            animation: pulse 1s infinite;
         }
-        .live-text {
+
+        .ticker-window {
+            height: 40px;
+            overflow: hidden;
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .ticker-item {
+            height: 40px;
             display: flex;
             align-items: center;
+            font-size: 15px;
+            color: #ffffff;
             font-weight: 500;
+            transition: transform 0.5s ease-in-out;
         }
+
         .amount-tag {
             color: #2ecc71;
             font-weight: bold;
             font-size: 16px;
-            margin: 0 4px;
+            margin: 0 5px;
         }
-        .badge-live {
-            background-color: #27ae60;
-            color: #fff;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+
         @keyframes pulse {
-            0% { transform: scale(0.9); opacity: 0.7; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(0.9); opacity: 0.7; }
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
     </style>
 </head>
@@ -279,14 +296,17 @@
         </div>
     </div>
 
-    <!-- Live Withdrawal Display (Bigger & Clear Banner) -->
-    <div class="live-banner">
-        <div class="live-text">
-            <span class="live-dot"></span>
-            <span id="liveUser" style="color: #64b5f6; font-weight: bold;">@abebe_88</span> 
-            <span class="amount-tag"><span id="liveAmount">5,000</span> ETB</span> አሁን ወጣ!
+    <!-- Live Withdrawal Vertical Sliding Display -->
+    <div class="live-banner-container">
+        <div class="live-badge-wrapper">
+            <span class="live-dot"></span> LIVE
         </div>
-        <span class="badge-live">LIVE</span>
+        <div class="ticker-window">
+            <div id="tickerItem" class="ticker-item">
+                <span style="color: #64b5f6; font-weight: bold;">@abebe_88</span> 
+                <span class="amount-tag">5,000 ETB</span> አሁን ወጣ!
+            </div>
+        </div>
     </div>
 
     <script>
@@ -357,17 +377,45 @@
             alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
         }
 
-        // Live Notification Animation Logic
-        const fakeUsers = ["@abebe_88", "@kalid_m", "@tigist_k", "@samuel_21", "@muna_t", "@john_d", "@helen_g", "@alex_eth", "@surafel_m", "@hanna_t"];
-        const fakeAmounts = ["5,000", "5,200", "5,500", "6,000", "5,000", "7,100", "8,000"];
+        // Vertical Slide Animation Logic
+        const fakeData = [
+            { user: "@abebe_88", amount: "5,000" },
+            { user: "@kalid_m", amount: "5,200" },
+            { user: "@tigist_k", amount: "5,500" },
+            { user: "@samuel_21", amount: "6,000" },
+            { user: "@muna_t", amount: "5,000" },
+            { user: "@john_d", amount: "7,100" },
+            { user: "@helen_g", amount: "5,000" },
+            { user: "@alex_eth", amount: "8,000" },
+            { user: "@surafel_m", amount: "5,400" },
+            { user: "@hanna_t", amount: "5,000" }
+        ];
+
+        let index = 0;
+        const tickerItem = document.getElementById('tickerItem');
 
         setInterval(() => {
-            const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
-            const randomAmount = fakeAmounts[Math.floor(Math.random() * fakeAmounts.length)];
+            // Slide UP (ወደላይ ማውጣት)
+            tickerItem.style.transform = 'translateY(-40px)';
             
-            document.getElementById('liveUser').innerText = randomUser;
-            document.getElementById('liveAmount').innerText = randomAmount;
-        }, 3500); // በየ 3.5 ሰከንዱ ይቀየራል
+            setTimeout(() => {
+                index = (index + 1) % fakeData.length;
+                const current = fakeData[index];
+                
+                tickerItem.innerHTML = `<span style="color: #64b5f6; font-weight: bold;">${current.user}</span> <span class="amount-tag">${current.amount} ETB</span> አሁን ወጣ!`;
+                
+                // Reset position to bottom without animation
+                tickerItem.style.transition = 'none';
+                tickerItem.style.transform = 'translateY(40px)';
+                
+                // Animate to center
+                setTimeout(() => {
+                    tickerItem.style.transition = 'transform 0.5s ease-in-out';
+                    tickerItem.style.transform = 'translateY(0px)';
+                }, 50);
+            }, 500);
+
+        }, 3000); // በየ 3 ሰከንዱ ወደላይ ይሸራተታል
     </script>
 </body>
 </html>
