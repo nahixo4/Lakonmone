@@ -269,7 +269,7 @@
                     <h4>ቴሌግራም ቻናል 1 ይቀላቀሉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tg1" onclick="handleTask('tg1', 100, 'https://t.me/lakonmoney')">ሥራው</button>
+                <button class="btn-action" id="btn_tg1" onclick="handleTelegramTask('tg1', 100, 'https://t.me/lakonmoney', '@lakonmoney')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -277,7 +277,7 @@
                     <h4>ቴሌግራም ቻናል 2 ይቀላቀሉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tg2" onclick="handleTask('tg2', 100, 'https://t.me/lakonemoney')">ሥራው</button>
+                <button class="btn-action" id="btn_tg2" onclick="handleTelegramTask('tg2', 100, 'https://t.me/lakonemoney', '@lakonemoney')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -285,7 +285,7 @@
                     <h4>ቴሌግራም ቻናል 3 ይቀላቀሉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tg3" onclick="handleTask('tg3', 100, 'https://t.me/lakomoney')">ሥራው</button>
+                <button class="btn-action" id="btn_tg3" onclick="handleTelegramTask('tg3', 100, 'https://t.me/lakomoney', '@lakomoney')">ሥራው</button>
             </div>
 
             <div class="section-title">▶️ YouTube Channels (+150 ETB)</div>
@@ -295,7 +295,7 @@
                     <h4>Shert Tube ሰብስክራይብ ያድርጉ</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_yt1" onclick="handleTask('yt1', 150, 'https://www.youtube.com/@Sherttube9630')">ሥራው</button>
+                <button class="btn-action" id="btn_yt1" onclick="handleGeneralTask('yt1', 150, 'https://www.youtube.com/@Sherttube9630')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -303,7 +303,7 @@
                     <h4>LAKON MONEY ሰብስክራይብ ያድርጉ</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_yt2" onclick="handleTask('yt2', 150, 'https://www.youtube.com/@LAKON-MONEY')">ሥራው</button>
+                <button class="btn-action" id="btn_yt2" onclick="handleGeneralTask('yt2', 150, 'https://www.youtube.com/@LAKON-MONEY')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -311,7 +311,7 @@
                     <h4>Lakon Emoney ሰብስክራይብ ያድርጉ</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_yt3" onclick="handleTask('yt3', 150, 'https://www.youtube.com/@lakon-Emoney')">ሥራው</button>
+                <button class="btn-action" id="btn_yt3" onclick="handleGeneralTask('yt3', 150, 'https://www.youtube.com/@lakon-Emoney')">ሥራው</button>
             </div>
 
             <!-- የቲክቶክ ታስኮች (+100 ETB) -->
@@ -322,7 +322,7 @@
                     <h4>timesaving_12 ፎሎው ያድርጉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tt1" onclick="handleTask('tt1', 100, 'https://www.tiktok.com/@timesaving_12')">ሥራው</button>
+                <button class="btn-action" id="btn_tt1" onclick="handleGeneralTask('tt1', 100, 'https://www.tiktok.com/@timesaving_12')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -330,7 +330,7 @@
                     <h4>lacon025 ፎሎው ያድርጉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tt2" onclick="handleTask('tt2', 100, 'https://www.tiktok.com/@lacon025')">ሥራው</button>
+                <button class="btn-action" id="btn_tt2" onclick="handleGeneralTask('tt2', 100, 'https://www.tiktok.com/@lacon025')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -338,7 +338,7 @@
                     <h4>lakonmoney1 ፎሎው ያድርጉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" id="btn_tt3" onclick="handleTask('tt3', 100, 'https://www.tiktok.com/@lakonmoney1')">ሥራው</button>
+                <button class="btn-action" id="btn_tt3" onclick="handleGeneralTask('tt3', 100, 'https://www.tiktok.com/@lakonmoney1')">ሥራው</button>
             </div>
         </div>
 
@@ -501,6 +501,9 @@
     </div>
 
     <script>
+        // 📌 የአንተ RENDER SERVER URL
+        const SERVER_URL = "https://telegram-check-1jgv.onrender.com/verify-join";
+
         let tg = window.Telegram?.WebApp;
         if(tg) tg.expand();
 
@@ -545,7 +548,7 @@
             for (let id in taskState) {
                 let btn = document.getElementById('btn_' + id);
                 if (btn) {
-                    if (taskState[id] === 'opened') {
+                    if (taskState[id] === 'opened' || taskState[id] === 'ready_to_verify') {
                         btn.innerText = "አረጋግጥ ✅";
                         btn.classList.add('btn-verify');
                     } else if (taskState[id] === 'done') {
@@ -565,7 +568,65 @@
             }
         }
 
-        function handleTask(id, reward, url) {
+        // 📌 የቴሌግራም ቻናሎችን በ RENDER SERVER ማረጋገጫ
+        async function handleTelegramTask(id, reward, url, channelUsername) {
+            let btn = document.getElementById('btn_' + id);
+            let userId = tg?.initDataUnsafe?.user?.id;
+
+            if (!userId) {
+                alert("እባክዎን Mini App-ኡን በቴሌግራም መተግበሪያ ውስጥ ይክፈቱት!");
+                return;
+            }
+
+            if (!taskState[id]) {
+                window.open(url, '_blank');
+                taskState[id] = 'ready_to_verify';
+                localStorage.setItem('taskState', JSON.stringify(taskState));
+                btn.innerText = "አረጋግጥ ✅";
+                btn.classList.add('btn-verify');
+                alert("እባክዎን ቻናሉን የተቀላቀሉ እና እንደገና ተመልሰው 'አረጋግጥ' የሚለውን ይጫኑ!");
+            } else if (taskState[id] === 'ready_to_verify') {
+                btn.innerText = "በማረጋገጥ ላይ... ⏳";
+                btn.disabled = true;
+
+                try {
+                    let response = await fetch(SERVER_URL, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            user_id: userId,
+                            channel: channelUsername
+                        })
+                    });
+
+                    let result = await response.json();
+
+                    if (result.is_member) {
+                        coins += reward;
+                        taskState[id] = 'done';
+                        localStorage.setItem('coins', coins);
+                        localStorage.setItem('taskState', JSON.stringify(taskState));
+
+                        btn.innerText = "ተጠናቋል ✅";
+                        btn.classList.remove('btn-verify');
+                        btn.disabled = true;
+                        updateUI();
+                        alert(`🎉 አባልነትዎ ተረጋግጧል! +${reward} ETB ተጨምሮልዎታል።`);
+                    } else {
+                        alert("⚠️ ቻናሉን አልተቀላቀሉም! እባክዎን አስቀድመው ቻናሉን ይቀላቀሉ እና እንደገና ይሞክሩ።");
+                        btn.innerText = "አረጋግጥ ✅";
+                        btn.disabled = false;
+                    }
+                } catch (error) {
+                    alert("የማረጋገጥ ችግር አጋጥሟል! እባክዎ ትንሽ ቆይተው እንደገና ይሞክሩ።");
+                    btn.innerText = "አረጋግጥ ✅";
+                    btn.disabled = false;
+                }
+            }
+        }
+
+        // 📌 YouTube እና TikTok ታስኮች ማስተናገጃ
+        function handleGeneralTask(id, reward, url) {
             let btn = document.getElementById('btn_' + id);
             
             if (!taskState[id]) {
@@ -574,7 +635,7 @@
                 localStorage.setItem('taskState', JSON.stringify(taskState));
                 btn.innerText = "አረጋግጥ ✅";
                 btn.classList.add('btn-verify');
-                alert("እባክዎን ገጹን/ቻናሉን ፎሎው/ጆይን አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
+                alert("እባክዎን ገጹን ፎሎው/ሰብስክራይብ አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
             } else if (taskState[id] === 'opened') {
                 coins += reward;
                 taskState[id] = 'done';
@@ -626,7 +687,7 @@
         }
 
         function copyRefLink() {
-            const userId = tg.initDataUnsafe?.user?.id || "123456";
+            const userId = tg?.initDataUnsafe?.user?.id || "123456";
             const botUsername = "YOUR_BOT_USERNAME"; 
             const refLink = `https://t.me/${botUsername}?start=${userId}`;
             
