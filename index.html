@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding-bottom: 50px; /* ለቀጣይ ባነር ቦታ */
+            padding-bottom: 75px; /* በትልቁ ባነር ምክንያት ከስር ቦታ እንዲኖር */
         }
         .header {
             background-color: #1e1e1e;
@@ -116,36 +116,58 @@
             margin: 12px 0;
             font-size: 14px;
         }
-        /* Live Withdrawal Banner */
+
+        /* ትልቅ የቀጥታ ክፍያ ማሳወቂያ (Bigger & Highlighted Live Banner) */
         .live-banner {
             position: fixed;
             bottom: 0;
             left: 0;
             width: 100%;
-            background-color: #1b2838;
-            border-top: 1px solid #27ae60;
-            color: #fff;
-            padding: 10px 15px;
-            font-size: 12px;
+            background: linear-gradient(90deg, #16222f, #1b2e3c);
+            border-top: 3px solid #27ae60;
+            color: #ffffff;
+            padding: 14px 18px;
+            font-size: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
             z-index: 1000;
         }
         .live-dot {
-            height: 8px;
-            width: 8px;
+            height: 12px;
+            width: 12px;
             background-color: #27ae60;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 6px;
-            animation: pulse 1.5s infinite;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #27ae60;
+            animation: pulse 1.2s infinite;
+        }
+        .live-text {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        .amount-tag {
+            color: #2ecc71;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 0 4px;
+        }
+        .badge-live {
+            background-color: #27ae60;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 1; }
+            0% { transform: scale(0.9); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.9); opacity: 0.7; }
         }
     </style>
 </head>
@@ -257,13 +279,14 @@
         </div>
     </div>
 
-    <!-- Live Withdrawal Display (Bottom Banner) -->
+    <!-- Live Withdrawal Display (Bigger & Clear Banner) -->
     <div class="live-banner">
-        <div>
+        <div class="live-text">
             <span class="live-dot"></span>
-            <span id="liveUser">@user***</span> <b><span id="liveAmount">5,000</span> ETB</b> አሁን ወጣ!
+            <span id="liveUser" style="color: #64b5f6; font-weight: bold;">@abebe_88</span> 
+            <span class="amount-tag"><span id="liveAmount">5,000</span> ETB</span> አሁን ወጣ!
         </div>
-        <span style="color: #888; font-size: 10px;">አሁን የተከፈለ</span>
+        <span class="badge-live">LIVE</span>
     </div>
 
     <script>
@@ -335,8 +358,8 @@
         }
 
         // Live Notification Animation Logic
-        const fakeUsers = ["@abebe_88", "@kalid_m", "@tigist_k", "@samuel_21", "@muna_t", "@john_d", "@helen_g", "@alex_eth", "@surafel_m"];
-        const fakeAmounts = ["5,000", "5,200", "5,500", "6,000", "5,000", "7,100"];
+        const fakeUsers = ["@abebe_88", "@kalid_m", "@tigist_k", "@samuel_21", "@muna_t", "@john_d", "@helen_g", "@alex_eth", "@surafel_m", "@hanna_t"];
+        const fakeAmounts = ["5,000", "5,200", "5,500", "6,000", "5,000", "7,100", "8,000"];
 
         setInterval(() => {
             const randomUser = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
@@ -344,7 +367,7 @@
             
             document.getElementById('liveUser').innerText = randomUser;
             document.getElementById('liveAmount').innerText = randomAmount;
-        }, 4000); // በየ 4 ሰከንዱ ይቀየራል
+        }, 3500); // በየ 3.5 ሰከንዱ ይቀየራል
     </script>
 </body>
 </html>
