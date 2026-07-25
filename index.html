@@ -18,7 +18,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            padding-bottom: 85px; /* ከስር ቦታ እንዲኖር */
+            padding-bottom: 85px;
         }
         .header {
             background-color: #1e1e1e;
@@ -76,6 +76,13 @@
         .page.active {
             display: block;
         }
+        .section-title {
+            font-size: 14px;
+            color: #27ae60;
+            margin: 15px 0 10px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
         .task-card {
             background-color: #1e1e1e;
             padding: 15px;
@@ -103,6 +110,10 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .btn-action:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
         .ref-box {
             background-color: #1e1e1e;
             padding: 20px;
@@ -117,7 +128,7 @@
             font-size: 14px;
         }
 
-        /* ወደላይ የሚሸራተት ማሳወቂያ (Vertical Slide Banner) */
+        /* Live Banner */
         .live-banner-container {
             position: fixed;
             bottom: 0;
@@ -133,7 +144,6 @@
             align-items: center;
             padding: 0 15px;
         }
-
         .live-badge-wrapper {
             display: flex;
             align-items: center;
@@ -146,7 +156,6 @@
             margin-right: 12px;
             flex-shrink: 0;
         }
-
         .live-dot {
             height: 8px;
             width: 8px;
@@ -156,14 +165,12 @@
             margin-right: 6px;
             animation: pulse 1s infinite;
         }
-
         .ticker-window {
             height: 40px;
             overflow: hidden;
             position: relative;
             flex-grow: 1;
         }
-
         .ticker-item {
             height: 40px;
             display: flex;
@@ -173,14 +180,12 @@
             font-weight: 500;
             transition: transform 0.5s ease-in-out;
         }
-
         .amount-tag {
             color: #2ecc71;
             font-weight: bold;
             font-size: 16px;
             margin: 0 5px;
         }
-
         @keyframes pulse {
             0% { opacity: 0.3; }
             50% { opacity: 1; }
@@ -208,50 +213,126 @@
     <div class="content">
         <!-- Tasks Page -->
         <div id="tasks" class="page active">
-            <!-- ቴሌግራም ቻናል 1 -->
+            
+            <div class="section-title">📌 Social Media Tasks</div>
+
+            <!-- ቴሌግራም ቻናሎች (100 ETB) -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ቴሌግራም ቻናል 1 ይቀላቀሉ</h4>
-                    <p>+20.00 ETB</p>
+                    <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(20, 'https://t.me/የመጀመሪያው_ቴሌግራም_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" onclick="completeTask(100, 'https://t.me/የመጀመሪያው_ቴሌግራም_ቻናልህ')">ሥራው</button>
             </div>
 
-            <!-- ቴሌግራም ቻናል 2 -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ቴሌግራም ቻናል 2 ይቀላቀሉ</h4>
-                    <p>+20.00 ETB</p>
+                    <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(20, 'https://t.me/ሁለተኛው_ቴሌግራም_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" onclick="completeTask(100, 'https://t.me/ሁለተኛው_ቴሌግራም_ቻናልህ')">ሥራው</button>
             </div>
 
-            <!-- ቴሌግራም ቻናል 3 -->
-            <div class="task-card">
-                <div class="task-info">
-                    <h4>ቴሌግራም ቻናል 3 ይቀላቀሉ</h4>
-                    <p>+20.00 ETB</p>
-                </div>
-                <button class="btn-action" onclick="completeTask(20, 'https://t.me/ሦስተኛው_ቴሌግራም_ቻናልህ')">ሥራው</button>
-            </div>
-
-            <!-- ዩቲዩብ ቻናል 1 -->
+            <!-- ዩቲዩብ ቻናሎች (150 ETB) -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ዩቲዩብ ቻናል 1 ሰብስክራይብ ያድርጉ</h4>
-                    <p>+50.00 ETB</p>
+                    <p>+150.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(50, 'https://youtube.com/የመጀመሪያው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" onclick="completeTask(150, 'https://youtube.com/የመጀመሪያው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
             </div>
 
-            <!-- ዩቲዩብ ቻናል 2 -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ዩቲዩብ ቻናል 2 ሰብስክራይብ ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(150, 'https://youtube.com/ሁለተኛው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
+            </div>
+
+            <div class="section-title">🎬 30 Sec Video Tasks (+50 ETB)</div>
+
+            <!-- 10 የቪዲዮ ታስኮች -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 1 ይመልከቱ (30 ሰከንድ)</h4>
                     <p>+50.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(50, 'https://youtube.com/ሁለተኛው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" id="vbtn1" onclick="startVideoTask(this, 1)">ሥራው</button>
             </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 2 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn2" onclick="startVideoTask(this, 2)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 3 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn3" onclick="startVideoTask(this, 3)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 4 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn4" onclick="startVideoTask(this, 4)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 5 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn5" onclick="startVideoTask(this, 5)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 6 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn6" onclick="startVideoTask(this, 6)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 7 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn7" onclick="startVideoTask(this, 7)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 8 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn8" onclick="startVideoTask(this, 8)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 9 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn9" onclick="startVideoTask(this, 9)">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቪዲዮ 10 ይመልከቱ (30 ሰከንድ)</h4>
+                    <p>+50.00 ETB</p>
+                </div>
+                <button class="btn-action" id="vbtn10" onclick="startVideoTask(this, 10)">ሥራው</button>
+            </div>
+
         </div>
 
         <!-- Referral Page -->
@@ -313,7 +394,6 @@
         let tg = window.Telegram?.WebApp;
         if(tg) tg.expand();
 
-        // 100 ETB Welcome bonus
         let coins = localStorage.getItem('coins');
         if (coins === null) {
             coins = 100.00;
@@ -322,7 +402,6 @@
             coins = parseFloat(coins);
         }
 
-        // Referral tracker
         let refCount = localStorage.getItem('refCount');
         if (refCount === null) {
             refCount = 0;
@@ -354,6 +433,36 @@
             alert(`ተጠናቋል! +${reward} ETB አግኝተዋል።`);
         }
 
+        // 30 Second Timer Video Task Logic
+        function startVideoTask(btn, taskId) {
+            let completed = localStorage.getItem('vtask_' + taskId);
+            if (completed) {
+                alert("ይህንን ታስክ አስቀድመው ሠርተዋል!");
+                return;
+            }
+
+            let timeLeft = 30;
+            btn.disabled = true;
+
+            let timer = setInterval(() => {
+                btn.innerText = `እባክዎ ${timeLeft}s ይጠብቁ...`;
+                timeLeft--;
+
+                if (timeLeft < 0) {
+                    clearInterval(timer);
+                    btn.innerText = "ተጠናቋል ✅";
+                    btn.style.backgroundColor = "#555";
+                    
+                    coins += 50;
+                    localStorage.setItem('coins', coins);
+                    localStorage.setItem('vtask_' + taskId, 'done');
+                    updateUI();
+                    
+                    alert("እንኳን ደስ አለዎት! 50.00 ETB አግኝተዋል።");
+                }
+            }, 1000);
+        }
+
         function copyRefLink() {
             const userId = tg.initDataUnsafe?.user?.id || "123456";
             const botUsername = "YOUR_BOT_USERNAME"; // የቴሌግራም ቦትህ username
@@ -377,25 +486,20 @@
             alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
         }
 
-        // Vertical Slide Animation Logic
+        // Live Notification Animation
         const fakeData = [
             { user: "@abebe_88", amount: "5,000" },
             { user: "@kalid_m", amount: "5,200" },
             { user: "@tigist_k", amount: "5,500" },
             { user: "@samuel_21", amount: "6,000" },
             { user: "@muna_t", amount: "5,000" },
-            { user: "@john_d", amount: "7,100" },
-            { user: "@helen_g", amount: "5,000" },
-            { user: "@alex_eth", amount: "8,000" },
-            { user: "@surafel_m", amount: "5,400" },
-            { user: "@hanna_t", amount: "5,000" }
+            { user: "@john_d", amount: "7,100" }
         ];
 
         let index = 0;
         const tickerItem = document.getElementById('tickerItem');
 
         setInterval(() => {
-            // Slide UP (ወደላይ ማውጣት)
             tickerItem.style.transform = 'translateY(-40px)';
             
             setTimeout(() => {
@@ -404,18 +508,16 @@
                 
                 tickerItem.innerHTML = `<span style="color: #64b5f6; font-weight: bold;">${current.user}</span> <span class="amount-tag">${current.amount} ETB</span> አሁን ወጣ!`;
                 
-                // Reset position to bottom without animation
                 tickerItem.style.transition = 'none';
                 tickerItem.style.transform = 'translateY(40px)';
                 
-                // Animate to center
                 setTimeout(() => {
                     tickerItem.style.transition = 'transform 0.5s ease-in-out';
                     tickerItem.style.transform = 'translateY(0px)';
                 }, 50);
             }, 500);
 
-        }, 3000); // በየ 3 ሰከንዱ ወደላይ ይሸራተታል
+        }, 3000);
     </script>
 </body>
 </html>
