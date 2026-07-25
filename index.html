@@ -251,7 +251,7 @@
         </div>
     </div>
 
-    <!-- Navigation Tabs (Proof ተነስቷል) -->
+    <!-- Navigation Tabs -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('tasks', this)">Tasks</button>
         <button class="tab-btn" onclick="switchTab('videos', this)">Videos 🎬</button>
@@ -312,6 +312,25 @@
                     <p>+150.00 ETB</p>
                 </div>
                 <button class="btn-action" id="btn_yt3" onclick="handleTask('yt3', 150, 'https://www.youtube.com/@lakon-Emoney')">ሥራው</button>
+            </div>
+
+            <!-- አዲስ የተጨመሩ የቲክቶክ ታስኮች -->
+            <div class="section-title">🎵 TikTok Accounts (+150 ETB)</div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቲክቶክ አካውንት 1 ፎሎው ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" id="btn_tt1" onclick="handleTask('tt1', 150, 'YOUR_TIKTOK_URL_1_HERE')">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቲክቶክ አካውንት 2 ፎሎው ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" id="btn_tt2" onclick="handleTask('tt2', 150, 'YOUR_TIKTOK_URL_2_HERE')">ሥራው</button>
             </div>
         </div>
 
@@ -414,7 +433,7 @@
             </div>
         </div>
 
-        <!-- Withdraw Page (አዲሶቹ ባንኮችና Pendng ቨሪፊኬሽን የገቡበት) -->
+        <!-- Withdraw Page -->
         <div id="withdraw" class="page">
             <div class="ref-box">
                 <h3>ገንዘብ ማውጫ (Withdraw)</h3>
@@ -547,7 +566,7 @@
                 localStorage.setItem('taskState', JSON.stringify(taskState));
                 btn.innerText = "አረጋግጥ ✅";
                 btn.classList.add('btn-verify');
-                alert("እባክዎን ቻናሉን ጆይን/ሰብስክራይብ አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
+                alert("እባክዎን ገጹን/ቻናሉን ፎሎው/ጆይን አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
             } else if (taskState[id] === 'opened') {
                 coins += reward;
                 taskState[id] = 'done';
@@ -607,7 +626,6 @@
             alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦ " + refLink);
         }
 
-        // Updated Withdraw Logic (Deducts Balance & Adds Pending Status)
         function requestWithdraw() {
             let method = document.getElementById('payMethod').value;
             let acc = document.getElementById('accNumber').value.trim();
@@ -633,12 +651,10 @@
                 return;
             }
 
-            // Deduct Balance (ከአካውንቱ ላይ መቀነስ)
             coins -= amount;
             localStorage.setItem('coins', coins);
             updateUI();
 
-            // Save Request to History (Pending Status)
             let reqData = {
                 method: method,
                 acc: acc,
