@@ -110,8 +110,12 @@
             font-weight: bold;
             cursor: pointer;
         }
+        .btn-verify {
+            background-color: #f39c12;
+            color: white;
+        }
         .btn-action:disabled {
-            background-color: #555;
+            background-color: #555 !important;
             cursor: not-allowed;
         }
         .ref-box {
@@ -214,15 +218,14 @@
         <!-- Tasks Page -->
         <div id="tasks" class="page active">
             
-            <div class="section-title">📌 Social Media Tasks</div>
+            <div class="section-title">📢 Telegram Channels (+100 ETB)</div>
 
-            <!-- ቴሌግራም ቻናሎች (100 ETB) -->
             <div class="task-card">
                 <div class="task-info">
                     <h4>ቴሌግራም ቻናል 1 ይቀላቀሉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(100, 'https://t.me/የመጀመሪያው_ቴሌግራም_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" id="btn_tg1" onclick="handleTask('tg1', 100, 'https://t.me/lakonmoney')">ሥራው</button>
             </div>
 
             <div class="task-card">
@@ -230,24 +233,41 @@
                     <h4>ቴሌግራም ቻናል 2 ይቀላቀሉ</h4>
                     <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(100, 'https://t.me/ሁለተኛው_ቴሌግራም_ቻናልህ')">ሥራው</button>
-            </div>
-
-            <!-- ዩቲዩብ ቻናሎች (150 ETB) -->
-            <div class="task-card">
-                <div class="task-info">
-                    <h4>ዩቲዩብ ቻናል 1 ሰብስክራይብ ያድርጉ</h4>
-                    <p>+150.00 ETB</p>
-                </div>
-                <button class="btn-action" onclick="completeTask(150, 'https://youtube.com/የመጀመሪያው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" id="btn_tg2" onclick="handleTask('tg2', 100, 'https://t.me/lakonemoney')">ሥራው</button>
             </div>
 
             <div class="task-card">
                 <div class="task-info">
-                    <h4>ዩቲዩብ ቻናል 2 ሰብስክራይብ ያድርጉ</h4>
+                    <h4>ቴሌግራም ቻናል 3 ይቀላቀሉ</h4>
+                    <p>+100.00 ETB</p>
+                </div>
+                <button class="btn-action" id="btn_tg3" onclick="handleTask('tg3', 100, 'https://t.me/lakomoney')">ሥራው</button>
+            </div>
+
+            <div class="section-title">▶️ YouTube Channels (+150 ETB)</div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>Shert Tube ሰብስክራይብ ያድርጉ</h4>
                     <p>+150.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(150, 'https://youtube.com/ሁለተኛው_ዩቲዩብ_ቻናልህ')">ሥራው</button>
+                <button class="btn-action" id="btn_yt1" onclick="handleTask('yt1', 150, 'https://www.youtube.com/@Sherttube9630')">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>LAKON MONEY ሰብስክራይብ ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" id="btn_yt2" onclick="handleTask('yt2', 150, 'https://www.youtube.com/@LAKON-MONEY')">ሥራው</button>
+            </div>
+
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>Lakon Emoney ሰብስክራይብ ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" id="btn_yt3" onclick="handleTask('yt3', 150, 'https://www.youtube.com/@lakon-Emoney')">ሥራው</button>
             </div>
 
             <div class="section-title">🎬 30 Sec Video Tasks (+50 ETB)</div>
@@ -372,12 +392,12 @@
                 <h2 style="color: #27ae60; margin-bottom: 15px;">245,000.00 ETB</h2>
 
                 <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">የቀጥታ ክፍያ ማረጋገጫዎችን እና ደረሰኞችን በቴሌግራም ቻናላችን ላይ ይመልከቱ፦</p>
-                <button class="btn-action" style="width: 100%; padding: 12px;" onclick="window.open('https://t.me/የቴሌግራም_Proof_ቻናልህ', '_blank')">የProof ቻናል ይቀላቀሉ 🔗</button>
+                <button class="btn-action" style="width: 100%; padding: 12px;" onclick="window.open('https://t.me/lakonmoney', '_blank')">የProof ቻናል ይቀላቀሉ 🔗</button>
             </div>
         </div>
     </div>
 
-    <!-- Live Withdrawal Vertical Sliding Display -->
+    <!-- Live Withdrawal Display -->
     <div class="live-banner-container">
         <div class="live-badge-wrapper">
             <span class="live-dot"></span> LIVE
@@ -410,7 +430,10 @@
             refCount = parseInt(refCount);
         }
 
+        let taskState = JSON.parse(localStorage.getItem('taskState')) || {};
+
         updateUI();
+        initButtons();
 
         function updateUI() {
             document.getElementById('coinBalance').innerText = coins.toFixed(2);
@@ -425,15 +448,47 @@
             element.classList.add('active');
         }
 
-        function completeTask(reward, url) {
-            window.open(url, '_blank');
-            coins += reward;
-            localStorage.setItem('coins', coins);
-            updateUI();
-            alert(`ተጠናቋል! +${reward} ETB አግኝተዋል።`);
+        function initButtons() {
+            for (let id in taskState) {
+                let btn = document.getElementById('btn_' + id);
+                if (btn) {
+                    if (taskState[id] === 'opened') {
+                        btn.innerText = "አረጋግጥ ✅";
+                        btn.classList.add('btn-verify');
+                    } else if (taskState[id] === 'done') {
+                        btn.innerText = "ተጠናቋል ✅";
+                        btn.disabled = true;
+                    }
+                }
+            }
         }
 
-        // 30 Second Timer Video Task Logic
+        function handleTask(id, reward, url) {
+            let btn = document.getElementById('btn_' + id);
+            
+            if (!taskState[id]) {
+                // Step 1: Open Link First
+                window.open(url, '_blank');
+                taskState[id] = 'opened';
+                localStorage.setItem('taskState', JSON.stringify(taskState));
+                btn.innerText = "አረጋግጥ ✅";
+                btn.classList.add('btn-verify');
+                alert("እባክዎን ቻናሉን ጆይን/ሰብስክራይብ አድርገው ሲመለሱ 'አረጋግጥ' የሚለውን ይጫኑ!");
+            } else if (taskState[id] === 'opened') {
+                // Step 2: Verify & Claim Reward
+                coins += reward;
+                taskState[id] = 'done';
+                localStorage.setItem('coins', coins);
+                localStorage.setItem('taskState', JSON.stringify(taskState));
+                
+                btn.innerText = "ተጠናቋል ✅";
+                btn.classList.remove('btn-verify');
+                btn.disabled = true;
+                updateUI();
+                alert(`ተጠናቋል! +${reward} ETB ተጨምሮልዎታል።`);
+            }
+        }
+
         function startVideoTask(btn, taskId) {
             let completed = localStorage.getItem('vtask_' + taskId);
             if (completed) {
@@ -451,7 +506,6 @@
                 if (timeLeft < 0) {
                     clearInterval(timer);
                     btn.innerText = "ተጠናቋል ✅";
-                    btn.style.backgroundColor = "#555";
                     
                     coins += 50;
                     localStorage.setItem('coins', coins);
@@ -465,7 +519,7 @@
 
         function copyRefLink() {
             const userId = tg.initDataUnsafe?.user?.id || "123456";
-            const botUsername = "YOUR_BOT_USERNAME"; // የቴሌግራም ቦትህ username
+            const botUsername = "YOUR_BOT_USERNAME"; 
             const refLink = `https://t.me/${botUsername}?start=${userId}`;
             
             navigator.clipboard.writeText(refLink);
@@ -477,23 +531,20 @@
                 alert("ለማውጣት ቢያንስ 5000 ETB ያስፈልግዎታል።");
                 return;
             }
-            
             if (refCount < 10) {
                 alert(`ገንዘቡን ለማውጣት ቢያንስ 10 ሰዎችን መጋበዝ አለብዎት! እስካሁን የጋበዟቸው: ${refCount} ሰው።`);
                 return;
             }
-
             alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
         }
 
-        // Live Notification Animation
+        // Live Banner Logic
         const fakeData = [
             { user: "@abebe_88", amount: "5,000" },
             { user: "@kalid_m", amount: "5,200" },
             { user: "@tigist_k", amount: "5,500" },
             { user: "@samuel_21", amount: "6,000" },
-            { user: "@muna_t", amount: "5,000" },
-            { user: "@john_d", amount: "7,100" }
+            { user: "@muna_t", amount: "5,000" }
         ];
 
         let index = 0;
@@ -501,22 +552,17 @@
 
         setInterval(() => {
             tickerItem.style.transform = 'translateY(-40px)';
-            
             setTimeout(() => {
                 index = (index + 1) % fakeData.length;
                 const current = fakeData[index];
-                
                 tickerItem.innerHTML = `<span style="color: #64b5f6; font-weight: bold;">${current.user}</span> <span class="amount-tag">${current.amount} ETB</span> አሁን ወጣ!`;
-                
                 tickerItem.style.transition = 'none';
                 tickerItem.style.transform = 'translateY(40px)';
-                
                 setTimeout(() => {
                     tickerItem.style.transition = 'transform 0.5s ease-in-out';
                     tickerItem.style.transform = 'translateY(0px)';
                 }, 50);
             }, 500);
-
         }, 3000);
     </script>
 </body>
