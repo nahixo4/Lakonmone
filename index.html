@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MakeMoney Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .balance-card {
+            background: linear-gradient(135deg, #2c3e50, #27ae60);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+        .balance-card h3 {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .balance-card h1 {
+            font-size: 28px;
+            margin-top: 5px;
+        }
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e1e1e;
+            padding: 10px;
+            margin: 15px;
+            border-radius: 12px;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+        .tab-btn.active {
+            background-color: #27ae60;
+            color: #fff;
+        }
+        .content {
+            flex: 1;
+            padding: 0 15px 20px 15px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .task-card {
+            background-color: #1e1e1e;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .task-info h4 {
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        .task-info p {
+            font-size: 12px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+        .btn-action {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .ref-box {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>MakeMoney Mini App</h2>
+        <div class="balance-card">
+            <h3>ያልወጣ ቀሪ ሂሳብ (Balance)</h3>
+            <h1><span id="coinBalance">0.00</span> ETB</h1>
+        </div>
+    </div>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('tasks', this)">Tasks</button>
+        <button class="tab-btn" onclick="switchTab('referral', this)">Referral</button>
+        <button class="tab-btn" onclick="switchTab('withdraw', this)">Withdraw</button>
+    </div>
+
+    <div class="content">
+        <!-- Tasks Page -->
+        <div id="tasks" class="page active">
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቴሌግራም ቻናል የተቀላቀሉ</h4>
+                    <p>+5.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(5, 'https://t.me/telegram')">ሥራው</button>
+            </div>
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ዩቲዩብ ቪዲዮ ይመልከቱ</h4>
+                    <p>+10.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(10, 'https://youtube.com')">ሥራው</button>
+            </div>
+        </div>
+
+        <!-- Referral Page -->
+        <div id="referral" class="page">
+            <div class="ref-box">
+                <h3>ጓደኞችዎን ይጋብዙ!</h3>
+                <p style="font-size: 13px; color: #aaa; margin: 10px 0 20px 0;">ላጋበዟቸው እያንዳንዱ ጓደኛ 10.00 ETB ያግኙ።</p>
+                <button class="btn-action" style="width: 100%; padding: 12px;" onclick="copyRefLink()">የመጋበዣ ሊንክ ኮፒ ያድርጉ</button>
+            </div>
+        </div>
+
+        <!-- Withdraw Page -->
+        <div id="withdraw" class="page">
+            <div class="ref-box">
+                <h3>ገንዘብ ማውጫ (Withdraw)</h3>
+                <p style="font-size: 13px; color: #aaa; margin: 10px 0;">ዝቅተኛው የማውጫ መጠን: 1000 ETB</p>
+                <button class="btn-action" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="requestWithdraw()">ገንዘብ ለማውጣት ጠይቅ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let tg = window.Telegram?.WebApp;
+        if(tg) tg.expand();
+
+        let coins = parseFloat(localStorage.getItem('coins')) || 0;
+        document.getElementById('coinBalance').innerText = coins.toFixed(2);
+
+        function switchTab(tabId, element) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+        }
+
+        function completeTask(reward, url) {
+            window.open(url, '_blank');
+            coins += reward;
+            document.getElementById('coinBalance').innerText = coins.toFixed(2);
+            localStorage.setItem('coins', coins);
+            alert(`ተጠናቋል! +${reward} ETB አግኝተዋል።`);
+        }
+
+        function copyRefLink() {
+            const userId = tg.initDataUnsafe?.user?.id || "user123";
+            const botUsername = "YOUR_BOT_USERNAME";
+            const refLink = `https://t.me/${botUsername}?start=${userId}`;
+            navigator.clipboard.writeText(refLink);
+            alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦ " + refLink);
+        }
+
+        function requestWithdraw() {
+            if (coins >= 1000) {
+                alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
+            } else {
+                alert("ለማውጣት ቢያንስ 1000 ETB ያስፈልግዎታል።");
+            }
+        }
+    </script>
+</body>
+</html>
