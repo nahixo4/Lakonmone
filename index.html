@@ -501,7 +501,6 @@
     </div>
 
     <script>
-        // 📌 የአንተ RENDER SERVER URL
         const SERVER_URL = "https://telegram-check-1jgv.onrender.com/verify-join";
 
         let tg = window.Telegram?.WebApp;
@@ -568,7 +567,6 @@
             }
         }
 
-        // 📌 የቴሌግራም ቻናሎችን በ RENDER SERVER ማረጋገጫ
         async function handleTelegramTask(id, reward, url, channelUsername) {
             let btn = document.getElementById('btn_' + id);
             let userId = tg?.initDataUnsafe?.user?.id;
@@ -625,7 +623,6 @@
             }
         }
 
-        // 📌 YouTube እና TikTok ታስኮች ማስተናገጃ
         function handleGeneralTask(id, reward, url) {
             let btn = document.getElementById('btn_' + id);
             
@@ -688,11 +685,12 @@
 
         function copyRefLink() {
             const userId = tg?.initDataUnsafe?.user?.id || "123456";
-            const botUsername = "YOUR_BOT_USERNAME"; 
+            // 📌 እዚህ ጋር የአንተ ትክክለኛ የቦት ዩዘርናም ተካቷል (በ @ ሳይሆን ያለ ምልክት)
+            const botUsername = "lakomoney_bot"; 
             const refLink = `https://t.me/${botUsername}?start=${userId}`;
             
             navigator.clipboard.writeText(refLink);
-            alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦ " + refLink);
+            alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦\n\n" + refLink);
         }
 
         function requestWithdraw() {
@@ -762,7 +760,6 @@
             container.innerHTML = html;
         }
 
-        // Live Banner
         const fakeData = [
             { user: "@abebe_88", amount: "5,000" },
             { user: "@kalid_m", amount: "5,200" },
