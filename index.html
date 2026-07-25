@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="am">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earn Money Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .balance-card {
+            background: #1e1e1e;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 20px auto;
+            width: 80%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .balance-card h3 {
+            color: #8e8e93;
+            margin: 0;
+        }
+        .balance-card h1 {
+            color: #ffcc00;
+            font-size: 45px;
+            margin: 10px 0 0 0;
+        }
+        .tap-btn {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #0088cc, #005588);
+            border: none;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 0 25px rgba(0, 136, 204, 0.6);
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        .tap-btn:active {
+            transform: scale(0.92);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🪙 Skill Money Mini App</h2>
+        
+        <div class="balance-card">
+            <h3>ያልህ ነጥብ (Balance)</h3>
+            <h1 id="score">0</h1>
+        </div>
+
+        <button class="tap-btn" onclick="addScore()">ተጫን (TAP)</button>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Mini App ገጹ ሙሉ እንዲሆን ያደርጋል
+
+        let score = 0;
+        function addScore() {
+            score += 1;
+            document.getElementById('score').innerText = score;
+        }
+    </script>
+</body>
+</html>
