@@ -132,6 +132,50 @@
             font-size: 14px;
         }
 
+        /* Form Inputs for Withdraw */
+        .form-group {
+            text-align: left;
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+        .form-control:focus {
+            border-color: #27ae60;
+        }
+
+        /* Withdrawal History Item */
+        .history-item {
+            background-color: #2a2a2a;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+        .status-pending {
+            color: #f39c12;
+            font-weight: bold;
+            background: rgba(243, 156, 18, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+
         /* Live Banner */
         .live-banner-container {
             position: fixed;
@@ -207,19 +251,17 @@
         </div>
     </div>
 
-    <!-- Navigation Tabs -->
+    <!-- Navigation Tabs (Proof ተነስቷል) -->
     <div class="nav-tabs">
         <button class="tab-btn active" onclick="switchTab('tasks', this)">Tasks</button>
         <button class="tab-btn" onclick="switchTab('videos', this)">Videos 🎬</button>
         <button class="tab-btn" onclick="switchTab('referral', this)">Referral</button>
         <button class="tab-btn" onclick="switchTab('withdraw', this)">Withdraw</button>
-        <button class="tab-btn" onclick="switchTab('proof', this)">Proof ✅</button>
     </div>
 
     <div class="content">
         <!-- Tasks Page -->
         <div id="tasks" class="page active">
-            
             <div class="section-title">📢 Telegram Channels (+100 ETB)</div>
 
             <div class="task-card">
@@ -273,7 +315,7 @@
             </div>
         </div>
 
-        <!-- Videos Page (ለብቻው የተለየ Tab) -->
+        <!-- Videos Page -->
         <div id="videos" class="page">
             <div class="section-title">🎬 30 Sec Video Tasks (+50 ETB)</div>
 
@@ -372,35 +414,53 @@
             </div>
         </div>
 
-        <!-- Withdraw Page -->
+        <!-- Withdraw Page (አዲሶቹ ባንኮችና Pendng ቨሪፊኬሽን የገቡበት) -->
         <div id="withdraw" class="page">
             <div class="ref-box">
                 <h3>ገንዘብ ማውጫ (Withdraw)</h3>
-                <p style="font-size: 13px; color: #aaa; margin: 10px 0;">ዝቅተኛው የማውጫ መጠን፦ <b>5000 ETB</b></p>
-                <p style="font-size: 13px; color: #e74c3c; margin-bottom: 10px;">ግዴታ ቢያንስ <b>10 ሰዎችን</b> መጋበዝ አለብዎት!</p>
+                <p style="font-size: 12px; color: #aaa; margin: 8px 0;">ዝቅተኛው የማውጫ መጠን፦ <b>5000 ETB</b></p>
+                <p style="font-size: 12px; color: #e74c3c; margin-bottom: 12px;">ግዴታ ቢያንስ <b>10 ሰዎችን</b> መጋበዝ አለብዎት!</p>
 
                 <div class="stats-box">
                     የጋበዟቸው ሰዎች፦ <b><span id="withdrawRefCount">0</span> / 10</b>
                 </div>
 
-                <button class="btn-action" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="requestWithdraw()">ገንዘብ ለማውጣት ጠይቅ</button>
+                <div class="form-group">
+                    <label>የመክፈያ መንገድ ይምረጡ (Payment Method):</label>
+                    <select id="payMethod" class="form-control">
+                        <option value="Telebirr">Telebirr (ቴሌብር)</option>
+                        <option value="CBE">CBE (የኢትዮጵያ ንግድ ባንክ)</option>
+                        <option value="CBE Birr">CBE Birr (ሲቢኢ ብር)</option>
+                        <option value="Awash Bank">Awash Bank (አዋሽ ባንክ)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>የአካውንት / የስልክ ቁጥር ማስገቢያ:</label>
+                    <input type="text" id="accNumber" class="form-control" placeholder="ምሳሌ፦ 0912345678 ወይም 100012345...">
+                </div>
+
+                <div class="form-group">
+                    <label>የማውጫ መጠን (ETB):</label>
+                    <input type="number" id="withdrawAmount" class="form-control" placeholder="5000" value="5000">
+                </div>
+
+                <button class="btn-action" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="requestWithdraw()">ገንዘብ ለማውጣት ጠይቅ</button>
+
+                <!-- የጥያቄዎች ታሪክ (Withdrawal Status) -->
+                <div style="margin-top: 20px; text-align: left;">
+                    <h4 style="font-size: 13px; color: #27ae60;">የገንዘብ ማውጣት ታሪክ (Withdrawal History):</h4>
+                    <div id="withdrawHistory">
+                        <p id="noHistory" style="font-size: 12px; color: #777; margin-top: 5px;">ምንም የተጠየቀ ክፍያ የለም።</p>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Proof Page -->
-        <div id="proof" class="page">
-            <div class="ref-box">
-                <h3>የክፍያ ማረጋገጫዎች (Payment Proofs)</h3>
-                <p style="font-size: 13px; color: #aaa; margin: 10px 0;">እስካሁን ለተጠቃሚዎች የተከፈለ አጠቃላይ ገንዘብ፦</p>
-                <h2 style="color: #27ae60; margin-bottom: 15px;">245,000.00 ETB</h2>
-
-                <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">የቀጥታ ክፍያ ማረጋገጫዎችን እና ደረሰኞችን በቴሌግራም ቻናላችን ላይ ይመልከቱ፦</p>
-                <button class="btn-action" style="width: 100%; padding: 12px;" onclick="window.open('https://t.me/lakonmoney', '_blank')">የProof ቻናል ይቀላቀሉ 🔗</button>
-            </div>
-        </div>
     </div>
 
-    <!-- Live Withdrawal Display -->
+    <!-- Live Withdrawal Banner -->
     <div class="live-banner-container">
         <div class="live-badge-wrapper">
             <span class="live-dot"></span> LIVE
@@ -434,10 +494,12 @@
         }
 
         let taskState = JSON.parse(localStorage.getItem('taskState')) || {};
-        let isVideoRunning = false; // አንዱ ቪዲዮ እየሰራ ከሆነ ሌላው እንዳይጀምር መቆጣጠሪያ
+        let withdrawRequests = JSON.parse(localStorage.getItem('withdrawRequests')) || [];
+        let isVideoRunning = false;
 
         updateUI();
         initButtons();
+        renderWithdrawHistory();
 
         function updateUI() {
             document.getElementById('coinBalance').innerText = coins.toFixed(2);
@@ -453,7 +515,6 @@
         }
 
         function initButtons() {
-            // Social media tasks setup
             for (let id in taskState) {
                 let btn = document.getElementById('btn_' + id);
                 if (btn) {
@@ -467,7 +528,6 @@
                 }
             }
 
-            // Video tasks setup
             for (let i = 1; i <= 10; i++) {
                 let vDone = localStorage.getItem('vtask_' + i);
                 let btn = document.getElementById('vbtn_' + i);
@@ -502,7 +562,6 @@
             }
         }
 
-        // Sequential 30-Second Video Logic
         function startVideoTask(taskId) {
             if (isVideoRunning) {
                 alert("⚠️ እባክዎ አሁን እየሄደ ያለው 30 ሰከንድ እስኪያልቅ ይጠብቁ!");
@@ -516,7 +575,7 @@
                 return;
             }
 
-            isVideoRunning = true; // Timer መጀመሩን መዝግብ
+            isVideoRunning = true;
             let timeLeft = 30;
             btn.disabled = true;
 
@@ -526,7 +585,7 @@
 
                 if (timeLeft < 0) {
                     clearInterval(timer);
-                    isVideoRunning = false; // መዘጋቱን መዝግብ
+                    isVideoRunning = false;
                     
                     btn.innerText = "ተጠናቋል ✅";
                     coins += 50;
@@ -534,7 +593,6 @@
                     localStorage.setItem('vtask_' + taskId, 'done');
                     updateUI();
                     
-                    // Verification Alert Message
                     alert("🎉 Verification Successful!\n\nቪዲዮውን ለ 30 ሰከንድ ስለተመለከቱ 50.00 ETB በስኬት ተጨምሮልዎታል!");
                 }
             }, 1000);
@@ -549,19 +607,77 @@
             alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦ " + refLink);
         }
 
+        // Updated Withdraw Logic (Deducts Balance & Adds Pending Status)
         function requestWithdraw() {
-            if (coins < 5000) {
-                alert("ለማውጣት ቢያንስ 5000 ETB ያስፈልግዎታል።");
+            let method = document.getElementById('payMethod').value;
+            let acc = document.getElementById('accNumber').value.trim();
+            let amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+            if (!acc) {
+                alert("እባክዎን የአካውንት ወይም የስልክ ቁጥር ያስገቡ!");
                 return;
             }
+
+            if (isNaN(amount) || amount < 5000) {
+                alert("ዝቅተኛው የማውጫ መጠን 5000 ETB ነው!");
+                return;
+            }
+
+            if (coins < amount) {
+                alert(`በቂ ቀሪ ሂሳብ የሎትም። የአሁኑ Balance: ${coins.toFixed(2)} ETB`);
+                return;
+            }
+            
             if (refCount < 10) {
                 alert(`ገንዘቡን ለማውጣት ቢያንስ 10 ሰዎችን መጋበዝ አለብዎት! እስካሁን የጋበዟቸው: ${refCount} ሰው።`);
                 return;
             }
-            alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
+
+            // Deduct Balance (ከአካውንቱ ላይ መቀነስ)
+            coins -= amount;
+            localStorage.setItem('coins', coins);
+            updateUI();
+
+            // Save Request to History (Pending Status)
+            let reqData = {
+                method: method,
+                acc: acc,
+                amount: amount,
+                status: "በመጠበቅ ላይ... ⏳"
+            };
+
+            withdrawRequests.unshift(reqData);
+            localStorage.setItem('withdrawRequests', JSON.stringify(withdrawRequests));
+
+            document.getElementById('accNumber').value = "";
+            renderWithdrawHistory();
+
+            alert(`✅ የገንዘብ ማውጣት ጥያቄዎ በስኬት ተልኳል!\n\nመጠን፦ ${amount} ETB\nመንገድ፦ ${method}\n\nገንዘቡ አሁን በሂደት ላይ (Pending) ነው።`);
         }
 
-        // Live Banner Animation
+        function renderWithdrawHistory() {
+            let container = document.getElementById('withdrawHistory');
+            if (withdrawRequests.length === 0) {
+                container.innerHTML = `<p id="noHistory" style="font-size: 12px; color: #777; margin-top: 5px;">ምንም የተጠየቀ ክፍያ የለም።</p>`;
+                return;
+            }
+
+            let html = "";
+            withdrawRequests.forEach(req => {
+                html += `
+                    <div class="history-item">
+                        <div>
+                            <b>${req.amount} ETB</b> (${req.method})<br>
+                            <span style="color: #aaa; font-size: 10px;">Acc: ${req.acc}</span>
+                        </div>
+                        <div class="status-pending">${req.status}</div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Live Banner
         const fakeData = [
             { user: "@abebe_88", amount: "5,000" },
             { user: "@kalid_m", amount: "5,200" },
