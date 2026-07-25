@@ -83,7 +83,7 @@
             align-items: center;
         }
         .task-info h4 {
-            font-size: 15px;
+            font-size: 14px;
             margin-bottom: 4px;
         }
         .task-info p {
@@ -99,6 +99,10 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+        }
+        .btn-action:disabled {
+            background-color: #444;
+            color: #888;
         }
         .ref-box {
             background-color: #1e1e1e;
@@ -127,19 +131,49 @@
     <div class="content">
         <!-- Tasks Page -->
         <div id="tasks" class="page active">
+            <!-- Telegram Task 1 -->
             <div class="task-card">
                 <div class="task-info">
-                    <h4>ቴሌግራም ቻናል የተቀላቀሉ</h4>
-                    <p>+5.00 ETB</p>
+                    <h4>ቴሌግራም ቻናል 1 ይቀላቀሉ</h4>
+                    <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(5, 'https://t.me/telegram')">ሥራው</button>
+                <button class="btn-action" onclick="completeTask(20, 'https://t.me/የቴሌግራም_ቻናል_ሊንክ_1')">ሥራው</button>
             </div>
+
+            <!-- Telegram Task 2 -->
             <div class="task-card">
                 <div class="task-info">
-                    <h4>ዩቲዩብ ቪዲዮ ይመልከቱ</h4>
-                    <p>+10.00 ETB</p>
+                    <h4>ቴሌግራም ቻናል 2 ይቀላቀሉ</h4>
+                    <p>+100.00 ETB</p>
                 </div>
-                <button class="btn-action" onclick="completeTask(10, 'https://youtube.com')">ሥራው</button>
+                <button class="btn-action" onclick="completeTask(20, 'https://t.me/የቴሌግራም_ቻናል_ሊንክ_2')">ሥራው</button>
+            </div>
+
+            <!-- Telegram Task 3 -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ቴሌግራም ቻናል 3 ይቀላቀሉ</h4>
+                    <p>+100.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(20, 'https://t.me/የቴሌግራም_ቻናል_ሊንክ_3')">ሥራው</button>
+            </div>
+
+            <!-- YouTube Task 1 -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ዩቲዩብ ቻናል 1 ሰብስክራይብ ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(50, 'https://youtube.com/የዩቲዩብ_ቻናል_ሊንክ_1')">ሥራው</button>
+            </div>
+
+            <!-- YouTube Task 2 -->
+            <div class="task-card">
+                <div class="task-info">
+                    <h4>ዩቲዩብ ቻናል 2 ሰብስክራይብ ያድርጉ</h4>
+                    <p>+150.00 ETB</p>
+                </div>
+                <button class="btn-action" onclick="completeTask(50, 'https://youtube.com/የዩቲዩብ_ቻናል_ሊንክ_2')">ሥራው</button>
             </div>
         </div>
 
@@ -147,7 +181,7 @@
         <div id="referral" class="page">
             <div class="ref-box">
                 <h3>ጓደኞችዎን ይጋብዙ!</h3>
-                <p style="font-size: 13px; color: #aaa; margin: 10px 0 20px 0;">ላጋበዟቸው እያንዳንዱ ጓደኛ 10.00 ETB ያግኙ።</p>
+                <p style="font-size: 13px; color: #aaa; margin: 10px 0 20px 0;">ላጋበዟቸው እያንዳንዱ ጓደኛ <b>100.00 ETB</b> ያግኙ።</p>
                 <button class="btn-action" style="width: 100%; padding: 12px;" onclick="copyRefLink()">የመጋበዣ ሊንክ ኮፒ ያድርጉ</button>
             </div>
         </div>
@@ -156,7 +190,7 @@
         <div id="withdraw" class="page">
             <div class="ref-box">
                 <h3>ገንዘብ ማውጫ (Withdraw)</h3>
-                <p style="font-size: 13px; color: #aaa; margin: 10px 0;">ዝቅተኛው የማውጫ መጠን: 1000 ETB</p>
+                <p style="font-size: 13px; color: #aaa; margin: 10px 0;">ዝቅተኛው የማውጫ መጠን: <b>5000 ETB</b></p>
                 <button class="btn-action" style="width: 100%; padding: 12px; margin-top: 15px;" onclick="requestWithdraw()">ገንዘብ ለማውጣት ጠይቅ</button>
             </div>
         </div>
@@ -166,7 +200,15 @@
         let tg = window.Telegram?.WebApp;
         if(tg) tg.expand();
 
-        let coins = parseFloat(localStorage.getItem('coins')) || 0;
+        // Welcome Bonus 100 ETB logic
+        let coins = localStorage.getItem('coins');
+        if (coins === null) {
+            coins = 100.00; // ለመጀመሪያ ጊዜ ሲከፍት 100 ብር ቦነስ ይሰጠዋል
+            localStorage.setItem('coins', coins);
+        } else {
+            coins = parseFloat(coins);
+        }
+
         document.getElementById('coinBalance').innerText = coins.toFixed(2);
 
         function switchTab(tabId, element) {
@@ -186,17 +228,17 @@
 
         function copyRefLink() {
             const userId = tg.initDataUnsafe?.user?.id || "user123";
-            const botUsername = "YOUR_BOT_USERNAME";
+            const botUsername = "YOUR_BOT_USERNAME"; // እዚህ ጋር የቦትህን username (ያለ @) ተካው
             const refLink = `https://t.me/${botUsername}?start=${userId}`;
             navigator.clipboard.writeText(refLink);
             alert("የመጋበዣ ሊንክዎ ኮፒ ሆኗል፦ " + refLink);
         }
 
         function requestWithdraw() {
-            if (coins >= 1000) {
+            if (coins >= 5000) {
                 alert("የገንዘብ ማውጣት ጥያቄዎ ተላኳል! በ 24 ሰዓት ውስጥ ይላክሎታል።");
             } else {
-                alert("ለማውጣት ቢያንስ 1000 ETB ያስፈልግዎታል።");
+                alert("ለማውጣት ቢያንስ 5000 ETB ያስፈልግዎታል።");
             }
         }
     </script>
